@@ -1,16 +1,13 @@
 const express = require('express')
-const app = express()
-const port = 3000
 const path = require('path');
 require('dotenv').config()
 const mongoose = require('mongoose');
 mongoose.connect(process.env.DATABASE);
 
-const Tour = mongoose.model('Tour', {
-  name: String,
-  vehicle: String
-});
+const Tour = require("./models/tour.model")
 
+const app = express()
+const port = 3000
 
 // Thiết lập views
 app.set('views', path.join(__dirname, "views"));
