@@ -3,6 +3,7 @@ const path = require('path');
 require('dotenv').config()
 const database = require("./config/database");
 
+const admintRoutes = require("./routes/admin/index.route");
 const clientRoutes = require("./routes/client/index.route");
 
 const app = express()
@@ -19,6 +20,7 @@ app.set('view engine', 'pug');
 app.use(express.static(path.join(__dirname, "public")))
 
 // Thiết lập đường dẫn
+app.use("/admin", admintRoutes);
 app.use("/", clientRoutes);
 
 app.listen(port, () => {
