@@ -1,6 +1,6 @@
 // Menu Mobile
 const buttonMenuMobile = document.querySelector(".header .inner-button-menu");
-if(buttonMenuMobile) {
+if (buttonMenuMobile) {
   const sider = document.querySelector(".sider");
   const siderOverlay = document.querySelector(".sider-overlay");
 
@@ -18,12 +18,12 @@ if(buttonMenuMobile) {
 
 // Schedule Section 8
 const scheduleSection8 = document.querySelector(".section-8 .inner-schedule");
-if(scheduleSection8) {
+if (scheduleSection8) {
   const buttonCreate = scheduleSection8.querySelector(".inner-schedule-create");
   const listItem = scheduleSection8.querySelector(".inner-schedule-list");
 
   // Tạo mới
-  if(buttonCreate) {
+  if (buttonCreate) {
     buttonCreate.addEventListener("click", () => {
       const firstItem = listItem.querySelector(".inner-schedule-item");
       const cloneItem = firstItem.cloneNode(true);
@@ -41,7 +41,7 @@ if(scheduleSection8) {
 
   listItem.addEventListener("click", (event) => {
     // Đóng/mở item
-    if(event.target.closest('.inner-more')) {
+    if (event.target.closest('.inner-more')) {
       const parentItem = event.target.closest('.inner-schedule-item');
       if (parentItem) {
         parentItem.classList.toggle('hidden');
@@ -49,7 +49,7 @@ if(scheduleSection8) {
     }
 
     // Xóa item
-    if(event.target.closest('.inner-remove')) {
+    if (event.target.closest('.inner-remove')) {
       const parentItem = event.target.closest('.inner-schedule-item');
       const totalItem = listItem.querySelectorAll(".inner-schedule-item").length;
       if (parentItem && totalItem > 1) {
@@ -79,7 +79,7 @@ if(scheduleSection8) {
 // Filepond Image
 const listFilepondImage = document.querySelectorAll("[filepond-image]");
 let filePond = {};
-if(listFilepondImage.length > 0) {
+if (listFilepondImage.length > 0) {
   listFilepondImage.forEach(filepondImage => {
     FilePond.registerPlugin(FilePondPluginImagePreview);
     FilePond.registerPlugin(FilePondPluginFileValidateType);
@@ -92,13 +92,12 @@ if(listFilepondImage.length > 0) {
 
 // Biểu đồ doanh thu
 const revenueChart = document.querySelector("#revenue-chart");
-if(revenueChart) {
+if (revenueChart) {
   new Chart(revenueChart, {
     type: 'line',
     data: {
       labels: ['01', '02', '03', '04', '05'],
-      datasets: [
-        {
+      datasets: [{
           label: 'Tháng 04/2025', // Nhãn của dataset
           data: [1200000, 1800000, 3200000, 900000, 1600000], // Dữ liệu
           borderColor: '#4379EE', // Màu viền
@@ -140,16 +139,14 @@ if(revenueChart) {
 
 // Category Create Form
 const categoryCreateForm = document.querySelector("#category-create-form");
-if(categoryCreateForm) {
+if (categoryCreateForm) {
   const validation = new JustValidate('#category-create-form');
 
   validation
-    .addField('#name', [
-      {
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập tên danh mục!'
-      }
-    ])
+    .addField('#name', [{
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập tên danh mục!'
+    }])
     .onSuccess((event) => {
       const name = event.target.name.value;
       const parent = event.target.parent.value;
@@ -157,34 +154,31 @@ if(categoryCreateForm) {
       const status = event.target.status.value;
       const avatars = filePond.avatar.getFiles();
       let avatar = null;
-      if(avatars.length > 0) {
+      if (avatars.length > 0) {
         avatar = avatars[0].file;
       }
       const description = tinymce.get("description").getContent();
-      
+
       console.log(name);
       console.log(parent);
       console.log(position);
       console.log(status);
       console.log(avatar);
       console.log(description);
-    })
-  ;
+    });
 }
 // End Category Create Form
 
 // Tour Create Form
 const tourCreateForm = document.querySelector("#tour-create-form");
-if(tourCreateForm) {
+if (tourCreateForm) {
   const validation = new JustValidate('#tour-create-form');
 
   validation
-    .addField('#name', [
-      {
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập tên tour!'
-      }
-    ])
+    .addField('#name', [{
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập tên tour!'
+    }])
     .onSuccess((event) => {
       const name = event.target.name.value;
       const category = event.target.category.value;
@@ -192,7 +186,7 @@ if(tourCreateForm) {
       const status = event.target.status.value;
       const avatars = filePond.avatar.getFiles();
       let avatar = null;
-      if(avatars.length > 0) {
+      if (avatars.length > 0) {
         avatar = avatars[0].file;
       }
       const priceAdult = event.target.priceAdult.value;
@@ -234,7 +228,7 @@ if(tourCreateForm) {
         });
       });
       // End schedules
-      
+
       console.log(name);
       console.log(category);
       console.log(position);
@@ -255,19 +249,17 @@ if(tourCreateForm) {
       console.log(departureDate);
       console.log(information);
       console.log(schedules);
-    })
-  ;
+    });
 }
 // End Tour Create Form
 
 // Order Edit Form
 const orderEditForm = document.querySelector("#order-edit-form");
-if(orderEditForm) {
+if (orderEditForm) {
   const validation = new JustValidate('#order-edit-form');
 
   validation
-    .addField('#fullName', [
-      {
+    .addField('#fullName', [{
         rule: 'required',
         errorMessage: 'Vui lòng nhập họ tên!'
       },
@@ -282,8 +274,7 @@ if(orderEditForm) {
         errorMessage: 'Họ tên không được vượt quá 50 ký tự!',
       },
     ])
-    .addField('#phone', [
-      {
+    .addField('#phone', [{
         rule: 'required',
         errorMessage: 'Vui lòng nhập số điện thoại!'
       },
@@ -307,29 +298,24 @@ if(orderEditForm) {
       console.log(paymentMethod);
       console.log(paymentStatus);
       console.log(status);
-    })
-  ;
+    });
 }
 // End Order Edit Form
 
 // Setting Website Info Form
 const settingWebsiteInfoForm = document.querySelector("#setting-website-info-form");
-if(settingWebsiteInfoForm) {
+if (settingWebsiteInfoForm) {
   const validation = new JustValidate('#setting-website-info-form');
 
   validation
-    .addField('#websiteName', [
-      {
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập tên website!'
-      },
-    ])
-    .addField('#email', [
-      {
-        rule: 'email',
-        errorMessage: 'Email không đúng định dạng!',
-      },
-    ])
+    .addField('#websiteName', [{
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập tên website!'
+    }, ])
+    .addField('#email', [{
+      rule: 'email',
+      errorMessage: 'Email không đúng định dạng!',
+    }, ])
     .onSuccess((event) => {
       const websiteName = event.target.websiteName.value;
       const phone = event.target.phone.value;
@@ -337,12 +323,12 @@ if(settingWebsiteInfoForm) {
       const address = event.target.address.value;
       const logos = filePond.logo.getFiles();
       let logo = null;
-      if(logos.length > 0) {
+      if (logos.length > 0) {
         logo = logos[0].file;
       }
       const favicons = filePond.favicon.getFiles();
       let favicon = null;
-      if(favicons.length > 0) {
+      if (favicons.length > 0) {
         favicon = favicons[0].file;
       }
 
@@ -352,19 +338,17 @@ if(settingWebsiteInfoForm) {
       console.log(address);
       console.log(logo);
       console.log(favicon);
-    })
-  ;
+    });
 }
 // End Setting Website Info Form
 
 // Setting Account Admin Create Form
 const settingAccountAdminCreateForm = document.querySelector("#setting-account-admin-create-form");
-if(settingAccountAdminCreateForm) {
+if (settingAccountAdminCreateForm) {
   const validation = new JustValidate('#setting-account-admin-create-form');
 
   validation
-    .addField('#fullName', [
-      {
+    .addField('#fullName', [{
         rule: 'required',
         errorMessage: 'Vui lòng nhập họ tên!'
       },
@@ -379,8 +363,7 @@ if(settingAccountAdminCreateForm) {
         errorMessage: 'Họ tên không được vượt quá 50 ký tự!',
       },
     ])
-    .addField('#email', [
-      {
+    .addField('#email', [{
         rule: 'required',
         errorMessage: 'Vui lòng nhập email!'
       },
@@ -389,8 +372,7 @@ if(settingAccountAdminCreateForm) {
         errorMessage: 'Email không đúng định dạng!',
       },
     ])
-    .addField('#phone', [
-      {
+    .addField('#phone', [{
         rule: 'required',
         errorMessage: 'Vui lòng nhập số điện thoại!'
       },
@@ -400,14 +382,11 @@ if(settingAccountAdminCreateForm) {
         errorMessage: 'Số điện thoại không đúng định dạng!'
       },
     ])
-    .addField('#positionCompany', [
-      {
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập chức vụ!'
-      },
-    ])
-    .addField('#password', [
-      {
+    .addField('#positionCompany', [{
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập chức vụ!'
+    }, ])
+    .addField('#password', [{
         rule: 'required',
         errorMessage: 'Vui lòng nhập mật khẩu!',
       },
@@ -442,7 +421,7 @@ if(settingAccountAdminCreateForm) {
       const password = event.target.password.value;
       const avatars = filePond.avatar.getFiles();
       let avatar = null;
-      if(avatars.length > 0) {
+      if (avatars.length > 0) {
         avatar = avatars[0].file;
       }
 
@@ -454,23 +433,20 @@ if(settingAccountAdminCreateForm) {
       console.log(status);
       console.log(password);
       console.log(avatar);
-    })
-  ;
+    });
 }
 // End Setting Account Admin Create Form
 
 // Setting Role Create Form
 const settingRoleCreateForm = document.querySelector("#setting-role-create-form");
-if(settingRoleCreateForm) {
+if (settingRoleCreateForm) {
   const validation = new JustValidate('#setting-role-create-form');
 
   validation
-    .addField('#name', [
-      {
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập tên nhóm quyền!'
-      },
-    ])
+    .addField('#name', [{
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập tên nhóm quyền!'
+    }, ])
     .onSuccess((event) => {
       const name = event.target.name.value;
       const description = event.target.description.value;
@@ -486,19 +462,17 @@ if(settingRoleCreateForm) {
       console.log(name);
       console.log(description);
       console.log(permissions);
-    })
-  ;
+    });
 }
 // End Setting Role Create Form
 
 // Profile Edit Form
 const profileEditForm = document.querySelector("#profile-edit-form");
-if(profileEditForm) {
+if (profileEditForm) {
   const validation = new JustValidate('#profile-edit-form');
 
   validation
-    .addField('#fullName', [
-      {
+    .addField('#fullName', [{
         rule: 'required',
         errorMessage: 'Vui lòng nhập họ tên!'
       },
@@ -513,8 +487,7 @@ if(profileEditForm) {
         errorMessage: 'Họ tên không được vượt quá 50 ký tự!',
       },
     ])
-    .addField('#email', [
-      {
+    .addField('#email', [{
         rule: 'required',
         errorMessage: 'Vui lòng nhập email!'
       },
@@ -523,8 +496,7 @@ if(profileEditForm) {
         errorMessage: 'Email không đúng định dạng!',
       },
     ])
-    .addField('#phone', [
-      {
+    .addField('#phone', [{
         rule: 'required',
         errorMessage: 'Vui lòng nhập số điện thoại!'
       },
@@ -540,7 +512,7 @@ if(profileEditForm) {
       const phone = event.target.phone.value;
       const avatars = filePond.avatar.getFiles();
       let avatar = null;
-      if(avatars.length > 0) {
+      if (avatars.length > 0) {
         avatar = avatars[0].file;
       }
 
@@ -548,19 +520,17 @@ if(profileEditForm) {
       console.log(email);
       console.log(phone);
       console.log(avatar);
-    })
-  ;
+    });
 }
 // End Profile Edit Form
 
 // Profile Change Password Form
 const profileChangePasswordForm = document.querySelector("#profile-change-password-form");
-if(profileChangePasswordForm) {
+if (profileChangePasswordForm) {
   const validation = new JustValidate('#profile-change-password-form');
 
   validation
-    .addField('#password', [
-      {
+    .addField('#password', [{
         rule: 'required',
         errorMessage: 'Vui lòng nhập mật khẩu!',
       },
@@ -585,8 +555,7 @@ if(profileChangePasswordForm) {
         errorMessage: 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt!',
       },
     ])
-    .addField('#confirmPassword', [
-      {
+    .addField('#confirmPassword', [{
         rule: 'required',
         errorMessage: 'Vui lòng xác nhận mật khẩu!',
       },
@@ -601,7 +570,23 @@ if(profileChangePasswordForm) {
     .onSuccess((event) => {
       const password = event.target.password.value;
       console.log(password);
-    })
-  ;
+    });
 }
 // End Profile Change Password Form
+
+// Sider
+const sider = document.querySelector(".sider");
+if (sider) {
+  const pathNameCurrent = window.location.pathname;
+  const splitPathNameCurrent = pathNameCurrent.split("/");
+  const menuList = sider.querySelectorAll("a");
+  menuList.forEach(item => {
+    const href = item.href;
+    const pathName = new URL(href).pathname;
+    const splitPathName = pathName.split("/");
+    if (splitPathNameCurrent[1] == splitPathName[1] && splitPathNameCurrent[2] == splitPathName[2]) {
+      item.classList.add("active");
+    }
+  })
+}
+// End Sider
