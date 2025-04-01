@@ -1,11 +1,10 @@
 // Login Form
 const loginForm = document.querySelector("#login-form");
-if(loginForm) {
+if (loginForm) {
   const validation = new JustValidate('#login-form');
 
   validation
-    .addField('#email', [
-      {
+    .addField('#email', [{
         rule: 'required',
         errorMessage: 'Vui lòng nhập email của bạn!',
       },
@@ -14,8 +13,7 @@ if(loginForm) {
         errorMessage: 'Email không đúng định dạng!',
       },
     ])
-    .addField('#password', [
-      {
+    .addField('#password', [{
         rule: 'required',
         errorMessage: 'Vui lòng nhập mật khẩu!',
       },
@@ -48,19 +46,17 @@ if(loginForm) {
       console.log(email);
       console.log(password);
       console.log(rememberPassword);
-    })
-  ;
+    });
 }
 // End Login Form
 
 // Register Form
 const registerForm = document.querySelector("#register-form");
-if(registerForm) {
+if (registerForm) {
   const validation = new JustValidate('#register-form');
 
   validation
-    .addField('#fullName', [
-      {
+    .addField('#fullName', [{
         rule: 'required',
         errorMessage: 'Vui lòng nhập họ tên!'
       },
@@ -75,8 +71,7 @@ if(registerForm) {
         errorMessage: 'Họ tên không được vượt quá 50 ký tự!',
       },
     ])
-    .addField('#email', [
-      {
+    .addField('#email', [{
         rule: 'required',
         errorMessage: 'Vui lòng nhập email của bạn!',
       },
@@ -85,8 +80,7 @@ if(registerForm) {
         errorMessage: 'Email không đúng định dạng!',
       },
     ])
-    .addField('#password', [
-      {
+    .addField('#password', [{
         rule: 'required',
         errorMessage: 'Vui lòng nhập mật khẩu!',
       },
@@ -111,33 +105,49 @@ if(registerForm) {
         errorMessage: 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt!',
       },
     ])
-    .addField('#agree', [
-      {
-        rule: 'required',
-        errorMessage: 'Bạn phải đồng ý với các điều khoản và điều kiện!',
-      },
-    ])
+    .addField('#agree', [{
+      rule: 'required',
+      errorMessage: 'Bạn phải đồng ý với các điều khoản và điều kiện!',
+    }, ])
     .onSuccess((event) => {
       const fullName = event.target.fullName.value;
       const email = event.target.email.value;
       const password = event.target.password.value;
 
-      console.log(fullName);
-      console.log(email);
-      console.log(password);
-    })
-  ;
+      const dataFinal = {
+        fullName: fullName,
+        email: email,
+        password: password
+      }
+
+      fetch(`/${pathAdmin}/account/register`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(dataFinal)
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.code == "error") {
+            alert(data.message);
+          }
+
+          if (data.code == "success") {
+            window.location.href = `/${pathAdmin}/account/register-initial`;
+          }
+        })
+    });
 }
 // End Register Form
 
 // Forgot Password Form
 const forgotPasswordForm = document.querySelector("#forgot-password-form");
-if(forgotPasswordForm) {
+if (forgotPasswordForm) {
   const validation = new JustValidate('#forgot-password-form');
 
   validation
-    .addField('#email', [
-      {
+    .addField('#email', [{
         rule: 'required',
         errorMessage: 'Vui lòng nhập email của bạn!',
       },
@@ -149,39 +159,34 @@ if(forgotPasswordForm) {
     .onSuccess((event) => {
       const email = event.target.email.value;
       console.log(email);
-    })
-  ;
+    });
 }
 // End Forgot Password Form
 
 // OTP Password Form
 const otpPasswordForm = document.querySelector("#otp-password-form");
-if(otpPasswordForm) {
+if (otpPasswordForm) {
   const validation = new JustValidate('#otp-password-form');
 
   validation
-    .addField('#otp', [
-      {
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập mã OTP!',
-      },
-    ])
+    .addField('#otp', [{
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập mã OTP!',
+    }, ])
     .onSuccess((event) => {
       const otp = event.target.otp.value;
       console.log(otp);
-    })
-  ;
+    });
 }
 // End OTP Password Form
 
 // Reset Password Form
 const resetPasswordForm = document.querySelector("#reset-password-form");
-if(resetPasswordForm) {
+if (resetPasswordForm) {
   const validation = new JustValidate('#reset-password-form');
 
   validation
-    .addField('#password', [
-      {
+    .addField('#password', [{
         rule: 'required',
         errorMessage: 'Vui lòng nhập mật khẩu!',
       },
@@ -206,8 +211,7 @@ if(resetPasswordForm) {
         errorMessage: 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt!',
       },
     ])
-    .addField('#confirm-password', [
-      {
+    .addField('#confirm-password', [{
         rule: 'required',
         errorMessage: 'Vui lòng xác nhận mật khẩu!',
       },
@@ -222,7 +226,6 @@ if(resetPasswordForm) {
     .onSuccess((event) => {
       const password = event.target.password.value;
       console.log(password);
-    })
-  ;
+    });
 }
 // End Reset Password Form
