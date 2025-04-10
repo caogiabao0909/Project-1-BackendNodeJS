@@ -599,7 +599,7 @@ if (buttonLogout) {
       method: "POST"
     })
       .then(res => res.json())
-      .them(date => {
+      .then(data => {
         if (data.code == "success") {
           window.location.href = `/${pathAdmin}/account/login`
         }
