@@ -90,6 +90,7 @@ module.exports.registerPost = async (req, res) => {
     return;
   }
 
+  // Mã hóa mật khẩu với bcrypt
   const salt = await bcrypt.genSalt(10); // Tạo ra chuỗi ngẫu nhiên có 10 kí tự
   const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -227,6 +228,29 @@ module.exports.otpPasswordPost = async (req, res) => {
 module.exports.resetPassword = async (req, res) => {
   res.render("admin/pages/reset-password", {
     pageTitle: "Đổi mật khẩu",
+  })
+}
+
+
+module.exports.resetPasswordPost = async (req, res) => {
+  const { password } = req.body;
+  console.log(password);
+
+  // Mã hóa mật khẩu với bcrypt
+  const salt = await bcrypt.genSalt(10); // Tạo ra chuỗi ngẫu nhiên có 10 kí tự
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  await AccountAdmin.updateOne({
+    _id: req.account.id,
+    deleted: false,
+    status: "active"
+  }, {
+    password: hashedPassword
+  })
+
+  res.json({
+    code: "success",
+    message: "Đổi mật khẩu thành công!"
   })
 }
 
