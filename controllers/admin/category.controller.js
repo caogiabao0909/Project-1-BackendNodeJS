@@ -1,6 +1,7 @@
 const Category = require("../../models/category.model")
 
 const categoryHelper = require("../../helpers/category.helper")
+const { resetPassword } = require("./account.controller")
 
 module.exports.list = async (req, res) => {
   res.render("admin/pages/category-list", {
@@ -35,6 +36,10 @@ module.exports.createPost = async (req, res) => {
 
   const newRecord = new Category(req.body);
   await newRecord.save();
+
+  req.flash("success", "Tạo danh mục thành công!");
+
+
 
   res.json({
     code: "success",
