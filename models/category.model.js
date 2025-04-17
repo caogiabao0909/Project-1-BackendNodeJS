@@ -10,6 +10,7 @@ const schema = new mongoose.Schema({
   avatar: String,
   description: String,
   createdBy: String,
+  updatedBy: String,
   slug: {
     type: String,
     slug: "name",
