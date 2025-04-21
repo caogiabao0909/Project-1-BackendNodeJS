@@ -735,3 +735,28 @@ if (listButtonDelte.length > 0) {
   })
 }
 // End Button Delete
+
+// Filter Status
+const filterStatus = document.querySelector("[filter-status]")
+if (filterStatus) {
+  const url = new URL(window.location.href);
+
+  // Lắng nghe thay đổi lựa chọn
+  filterStatus.addEventListener("change", () => {
+    const value = filterStatus.value;
+    if (value) {
+      url.searchParams.set("status", value)
+    } else {
+      url.searchParams.delete("status");
+    }
+
+    window.location.href = url.href;
+  })
+
+  // Hiển thị lựa chọn mặc đinh
+  const valueCurrent = url.searchParams.get("status");
+  if (valueCurrent) {
+    filterStatus.value = valueCurrent;
+  }
+}
+// End Filter Status

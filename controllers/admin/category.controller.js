@@ -6,11 +6,19 @@ const categoryHelper = require("../../helpers/category.helper")
 const { resetPassword } = require("./account.controller")
 
 module.exports.list = async (req, res) => {
-  const categoryList = await Category.find({
+  const find = {
     deleted: false
-  }).sort({
-    position: "desc"
-  })
+  }
+
+  if (req.query.status) {
+    find.status = req.query.status
+  }
+
+  const categoryList = await Category
+    .find(find)
+    .sort({
+      position: "desc"
+    })
 
   for (const item of categoryList) {
     if (item.createdBy) {
