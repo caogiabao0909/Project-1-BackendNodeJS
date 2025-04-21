@@ -708,3 +708,30 @@ if (alertTime) {
   }, time);
 }
 // End Alert
+
+// Button Delete
+const listButtonDelte = document.querySelectorAll("[button-delete]");
+if (listButtonDelte.length > 0) {
+  listButtonDelte.forEach(button => {
+    button.addEventListener("click", () => {
+      const dataApi = button.getAttribute("data-api");
+      console.log(dataApi)
+
+      fetch(dataApi, {
+        method: "PATCH"
+      })
+        .then(res => res.json()
+          .then(data => {
+            if (data.code == "error") {
+              alert(data.message);
+            }
+
+            if (data.code == "success") {
+              window.location.reload();
+            }
+          })
+        )
+    })
+  })
+}
+// End Button Delete
