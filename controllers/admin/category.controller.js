@@ -22,6 +22,25 @@ module.exports.list = async (req, res) => {
   }
   // Hết lọc theo người tạo
 
+  // Lọc theo ngày tạo
+  const dataFilter = {}
+
+  if (req.query.startDate) {
+    const startDate = moment(req.query.startDate).startOf("date").toDate();
+    dataFilter.$gte = startDate;
+  }
+
+  if (req.query.endDate) {
+    const endDate = moment(req.query.endDate).endOf("date").toDate();
+    dataFilter.$lte = endDate;
+  }
+
+  if (Object.keys(dataFilter).length > 0) {
+    find.createdAt = dataFilter;
+  }
+  // Hết Lọc theo ngày tạo
+
+
   const categoryList = await Category
     .find(find)
     .sort({
