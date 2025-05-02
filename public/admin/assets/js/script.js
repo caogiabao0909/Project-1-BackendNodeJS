@@ -835,3 +835,15 @@ if (filterEndtDate) {
   }
 }
 // End Filter Start Date
+
+// Filer reset
+const filterReset = document.querySelector("[filter-reset]");
+if (filterReset) {
+  const url = new URL(window.location.href);
+  filterReset.addEventListener("click", () => {
+    url.search = "";
+    window.location.href = url.href;
+  })
+}
+
+// End Filer reset
