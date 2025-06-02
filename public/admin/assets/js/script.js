@@ -546,11 +546,22 @@ if (settingWebsiteInfoForm) {
       let logo = null;
       if (logos.length > 0) {
         logo = logos[0].file;
+        const elementImageDefault = event.target.logo.closest("[image-default]");
+        const imageDefault = elementImageDefault.getAttribute("image-default");
+        if (imageDefault.includes(logo.name)) {
+          logo = null;
+        }
+
       }
       const favicons = filePond.favicon.getFiles();
       let favicon = null;
       if (favicons.length > 0) {
         favicon = favicons[0].file;
+        const elementImageDefault = event.target.favicon.closest("[image-default]");
+        const imageDefault = elementImageDefault.getAttribute("image-default");
+        if (imageDefault.includes(favicon.name)) {
+          favicon = null;
+        }
       }
 
       console.log(websiteName);
@@ -559,6 +570,31 @@ if (settingWebsiteInfoForm) {
       console.log(address);
       console.log(logo);
       console.log(favicon);
+
+      // Tạo formData
+      const formData = new FormData();
+
+      formData.append("websiteName", websiteName);
+      formData.append("phone", phone);
+      formData.append("email", email);
+      formData.append("address", address);
+      formData.append("logo", logo);
+      formData.append("favicon", favicon);
+
+      fetch(`/${pathAdmin}/setting/website-info`, {
+        method: "PATCH",
+        body: formData
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.code == "error") {
+            alert(data.message)
+          }
+
+          if (data.code == "success") {
+            window.location.reload();
+          }
+        })
     });
 }
 // End Setting Website Info Form
