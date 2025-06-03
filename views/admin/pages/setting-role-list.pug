@@ -41,12 +41,12 @@ block main
               td
                 .inner-buttons
                   a(
-                    href=`${pathAdmin}/setting/role/edit/${item.id}`
+                    href=`/${pathAdmin}/setting/role/edit/${item.id}`
                     class="inner-edit"
                   ) <i class="fa-regular fa-pen-to-square"></i>
                   button(
                     class="inner-delete"
-                    data-api=`${pathAdmin}/setting/role/edit/delete/${item.id}`,
+                    data-api=`/${pathAdmin}/setting/role/edit/delete/${item.id}`,
                     button-delete,
                   ) <i class="fa-regular fa-trash-can"></i>
   //- End Section 6
