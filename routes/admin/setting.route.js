@@ -19,7 +19,8 @@ router.patch(
       { name: 'favicon', maxCount: 1 }
     ]
   ),
-  settingController.websiteInfoPatch);
+  settingController.websiteInfoPatch
+);
 
 router.get('/account-admin/list', settingController.accountAdminList);
 
@@ -28,5 +29,7 @@ router.get('/account-admin/create', settingController.accountAdminCreate);
 router.get('/role/list', settingController.roleList);
 
 router.get('/role/create', settingController.roleCreate);
+
+router.post('/role/create', settingController.roleCreatePost);
 
 module.exports = router;
