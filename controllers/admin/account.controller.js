@@ -231,7 +231,6 @@ module.exports.resetPassword = async (req, res) => {
   })
 }
 
-
 module.exports.resetPasswordPost = async (req, res) => {
   const { password } = req.body;
   console.log(password);
