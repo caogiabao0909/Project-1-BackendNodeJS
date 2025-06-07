@@ -260,6 +260,14 @@ module.exports.deletePatch = async (req, res) => {
 }
 
 module.exports.undoPatch = async (req, res) => {
+  if (!req.permissions.includes("tour-trash")) {
+    res.json({
+      code: "error",
+      message: "Không có quyển sử dụng tính năng này!"
+    })
+    return;
+  }
+
   try {
     const id = req.params.id;
 
@@ -285,7 +293,7 @@ module.exports.undoPatch = async (req, res) => {
 }
 
 module.exports.deleteDestroyPatch = async (req, res) => {
-  if (!req.permissions.includes("tour-delete")) {
+  if (!req.permissions.includes("tour-trash")) {
     res.json({
       code: "error",
       message: "Không có quyển sử dụng tính năng này!"
