@@ -59,6 +59,14 @@ module.exports.create = async (req, res) => {
 }
 
 module.exports.createPost = async (req, res) => {
+  if (!req.permissions.includes("tour-create")) {
+    res.json({
+      code: "error",
+      message: "Không có quyển sử dụng tính năng này!"
+    })
+    return;
+  }
+
   if (req.body.position) {
     req.body.position = parseInt(req.body.position)
   } else {
@@ -92,7 +100,6 @@ module.exports.createPost = async (req, res) => {
     code: "success"
   })
 }
-
 
 module.exports.trash = async (req, res) => {
   const find = {
@@ -163,6 +170,14 @@ module.exports.edit = async (req, res) => {
 }
 
 module.exports.editPatch = async (req, res) => {
+  if (!req.permissions.includes("tour-edit")) {
+    res.json({
+      code: "error",
+      message: "Không có quyển sử dụng tính năng này!"
+    })
+    return;
+  }
+
   try {
     const id = req.params.id;
 
@@ -212,6 +227,14 @@ module.exports.editPatch = async (req, res) => {
 }
 
 module.exports.deletePatch = async (req, res) => {
+  if (!req.permissions.includes("tour-delete")) {
+    res.json({
+      code: "error",
+      message: "Không có quyển sử dụng tính năng này!"
+    })
+    return;
+  }
+
   try {
     const id = req.params.id;
 
@@ -262,6 +285,14 @@ module.exports.undoPatch = async (req, res) => {
 }
 
 module.exports.deleteDestroyPatch = async (req, res) => {
+  if (!req.permissions.includes("tour-delete")) {
+    res.json({
+      code: "error",
+      message: "Không có quyển sử dụng tính năng này!"
+    })
+    return;
+  }
+
   try {
     const id = req.params.id;
 
@@ -283,6 +314,14 @@ module.exports.deleteDestroyPatch = async (req, res) => {
 }
 
 module.exports.trashChangeMultiPatch = async (req, res) => {
+  if (!req.permissions.includes("tour-edit")) {
+    res.json({
+      code: "error",
+      message: "Không có quyển sử dụng tính năng này!"
+    })
+    return;
+  }
+
   try {
     const { option, ids } = req.body;
 

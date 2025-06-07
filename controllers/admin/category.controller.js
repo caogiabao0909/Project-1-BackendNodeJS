@@ -129,6 +129,14 @@ module.exports.create = async (req, res) => {
 }
 
 module.exports.createPost = async (req, res) => {
+  if (!req.permissions.includes("category-create")) {
+    res.json({
+      code: "error",
+      message: "Không có quyển sử dụng tính năng này!"
+    })
+    return;
+  }
+
   if (req.body.position) {
     req.body.position = parseInt(req.body.position)
   } else {
@@ -168,7 +176,7 @@ module.exports.edit = async (req, res) => {
     })
 
     res.render("admin/pages/category-edit", {
-      pageTitle: "Chỉnh sửa danh mụcc",
+      pageTitle: "Chỉnh sửa danh mục",
       categoryList: categoryTree,
       categoryDetail: categoryDetail
     })
@@ -178,6 +186,14 @@ module.exports.edit = async (req, res) => {
 }
 
 module.exports.editPatch = async (req, res) => {
+  if (!req.permissions.includes("category-edit")) {
+    res.json({
+      code: "error",
+      message: "Không có quyển sử dụng tính năng này!"
+    })
+    return;
+  }
+
   try {
     const id = req.params.id;
     if (req.body.position) {
@@ -213,6 +229,14 @@ module.exports.editPatch = async (req, res) => {
 }
 
 module.exports.deletePatch = async (req, res) => {
+  if (!req.permissions.includes("category-delete")) {
+    res.json({
+      code: "error",
+      message: "Không có quyển sử dụng tính năng này!"
+    })
+    return;
+  }
+
   try {
     const id = req.params.id;
 
@@ -244,6 +268,13 @@ module.exports.changeMultiPatch = async (req, res) => {
     switch (option) {
       case "active":
       case "inactive":
+        if (!req.permissions.includes("category-edit")) {
+          res.json({
+            code: "error",
+            message: "Không có quyển sử dụng tính năng này!"
+          })
+          return;
+        }
         await Category.updateMany({
           _id: { $in: ids }
         }, {
@@ -252,6 +283,13 @@ module.exports.changeMultiPatch = async (req, res) => {
         req.flash("success", "Đổi trạng thái thành công!");
         break;
       case "delete":
+        if (!req.permissions.includes("category-delete")) {
+          res.json({
+            code: "error",
+            message: "Không có quyển sử dụng tính năng này!"
+          })
+          return;
+        }
         await Category.updateMany({
           _id: { $in: ids }
         }, {
