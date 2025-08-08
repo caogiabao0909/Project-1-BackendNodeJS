@@ -281,17 +281,38 @@ if (emailForm) {
 
   validation
     .addField('#email-input', [{
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập email của bạn!',
-      },
-      {
-        rule: 'email',
-        errorMessage: 'Email không đúng định dạng!',
-      },
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập email của bạn!',
+    },
+    {
+      rule: 'email',
+      errorMessage: 'Email không đúng định dạng!',
+    },
     ])
     .onSuccess((event) => {
       const email = event.target.email.value;
-      console.log(email);
+
+      const dataFinal = {
+        email: email
+      }
+
+      fetch(`/contact/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dataFinal)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.code == "error") {
+            alert(data.message)
+          }
+
+          if (data.code == "success") {
+            window.location.reload();
+          }
+        })
     });
 }
 // End Email Form
@@ -316,29 +337,29 @@ if (orderForm) {
 
   validation
     .addField('#full-name-input', [{
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập họ tên!'
-      },
-      {
-        rule: 'minLength',
-        value: 5,
-        errorMessage: 'Họ tên phải có ít nhất 5 ký tự!',
-      },
-      {
-        rule: 'maxLength',
-        value: 50,
-        errorMessage: 'Họ tên không được vượt quá 50 ký tự!',
-      },
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập họ tên!'
+    },
+    {
+      rule: 'minLength',
+      value: 5,
+      errorMessage: 'Họ tên phải có ít nhất 5 ký tự!',
+    },
+    {
+      rule: 'maxLength',
+      value: 50,
+      errorMessage: 'Họ tên không được vượt quá 50 ký tự!',
+    },
     ])
     .addField('#phone-input', [{
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập số điện thoại!'
-      },
-      {
-        rule: 'customRegexp',
-        value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
-        errorMessage: 'Số điện thoại không đúng định dạng!'
-      },
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập số điện thoại!'
+    },
+    {
+      rule: 'customRegexp',
+      value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
+      errorMessage: 'Số điện thoại không đúng định dạng!'
+    },
     ])
     .onSuccess((event) => {
       const fullName = event.target.fullName.value;
@@ -368,3 +389,14 @@ if (orderForm) {
   // End List Input Method
 }
 // End Order Form
+
+// Alert
+const alertTime = document.querySelector("[alert-time]");
+if (alertTime) {
+  let time = alertTime.getAttribute("alert-time");
+  time = time ? parseInt(time) : 4000;
+  setTimeout(() => {
+    alertTime.remove(); // Xóa phần tử khỏi giao diện
+  }, time);
+}
+// End Alert
