@@ -1,4 +1,9 @@
 const Category = require("../../models/category.model");
+const Tour = require("../../models/tour.model")
+
+const categoryHelper = require("../../helpers/category.helper")
+
+const moment = require("moment")
 
 module.exports.list = async (req, res) => {
   const slug = req.params.slug;
@@ -45,8 +50,36 @@ module.exports.list = async (req, res) => {
     title: category.name
   })
 
+  // Lấy danh sách tour
+  const listCategoryId = await categoryHelper.getAllSubcategoryIds(category.id)
+
+  const find = {
+    category: { $in: listCategoryId },
+    deleted: false,
+    status: "active"
+  }
+
+  // Tính tổng số tour
+  const totalTour = await Tour.countDocuments(find)
+
+  const tourList = await Tour
+    .find(find)
+    .sort({
+      position: "desc"
+    })
+    .limit(8)
+
+  for (const item of tourList) {
+    item.departureDateFormat = moment(item.departureDate).format("DD/MM/YYYY");
+  }
+
+  // Hết Lấy danh sách tour
+
   res.render("client/pages/tour-list", {
     pageTitle: "Danh sách tour",
-    breadcrumb: breadcrumb
+    breadcrumb,
+    category,
+    tourList,
+    totalTour,
   })
 }
