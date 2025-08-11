@@ -1,9 +1,10 @@
 const Category = require("../../models/category.model");
 const Tour = require("../../models/tour.model")
+const City = require("../../models/city.model");
 
 const categoryHelper = require("../../helpers/category.helper")
 
-const moment = require("moment")
+const moment = require("moment");
 
 module.exports.list = async (req, res) => {
   const slug = req.params.slug;
@@ -72,8 +73,11 @@ module.exports.list = async (req, res) => {
   for (const item of tourList) {
     item.departureDateFormat = moment(item.departureDate).format("DD/MM/YYYY");
   }
-
   // Hết Lấy danh sách tour
+
+  // Lấy danh sách thành phố
+  const cityList = await City.find({});
+  // Hết Lấy danh sách thành phố
 
   res.render("client/pages/tour-list", {
     pageTitle: "Danh sách tour",
@@ -81,5 +85,6 @@ module.exports.list = async (req, res) => {
     category,
     tourList,
     totalTour,
+    cityList
   })
 }

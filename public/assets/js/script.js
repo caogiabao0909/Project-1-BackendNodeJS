@@ -400,3 +400,37 @@ if (alertTime) {
   }, time);
 }
 // End Alert
+
+// Box Filter
+const boxFilter = document.querySelector(".box-filter")
+if (boxFilter) {
+  const url = new URL(`${window.location.origin}/search`)
+
+  const buttonApply = boxFilter.querySelector(".inner-button")
+
+  buttonApply.addEventListener("click", () => {
+    const listFilter = [
+      "locationFrom",
+      "locationTo",
+      "departureDate",
+      "stockAdult",
+      "stockChildren",
+      "stockBaby",
+      "price",
+    ]
+
+    listFilter.forEach(name => {
+      const inputElement = boxFilter.querySelector(`[name="${name}"]`);
+      const value = inputElement ? inputElement.value : "";
+
+      if (value) {
+        url.searchParams.set(name, value)
+      } else {
+        url.searchParams.delete(name)
+      }
+    });
+
+    window.location.href = url.href;
+  })
+}
+// End Box Filter
