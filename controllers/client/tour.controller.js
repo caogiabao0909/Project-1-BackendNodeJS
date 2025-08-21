@@ -1,5 +1,8 @@
 const Category = require("../../models/category.model");
+const City = require("../../models/city.model");
 const Tour = require("../../models/tour.model")
+
+const moment = require("moment")
 
 module.exports.detail = async (req, res) => {
   try {
@@ -60,10 +63,17 @@ module.exports.detail = async (req, res) => {
       title: tourDetail.name
     })
 
+    tourDetail.departureDateFormat = moment(tourDetail.departureDate).format("DD/MM/YYYY");
+
+    const cityList = await City.find({
+      _id: { $in: tourDetail.locations }
+    })
+
     res.render("client/pages/tour-detail", {
       pageTitle: "Chi tiết tour",
       breadcrumb,
       tourDetail,
+      cityList,
     })
 
   } catch (error) {
