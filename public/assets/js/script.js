@@ -653,6 +653,7 @@ const drawCart = () => {
 
         // Cập nhật lại giỏ hàng
         localStorage.setItem("cart", JSON.stringify(data.cart))
+        miniCart.innerHTML = data.cart.length;
 
         // Tính tiền
         const subTotalPrice = data.cart.reduce((sum, tour) => {
