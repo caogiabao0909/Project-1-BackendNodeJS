@@ -535,6 +535,7 @@ if (boxTourDetail) {
         quantityChildren,
         quantityBaby,
         locationFrom,
+        checked: true,
       }
 
       const cart = JSON.parse(localStorage.getItem("cart"))
@@ -587,7 +588,13 @@ const drawCart = () => {
               <button class="inner-delete" button-delete tour-id=${item.tourId}>
                 <i class="fa-solid fa-xmark"></i>
               </button>
-              <input class="inner-check" type="checkbox">
+              <input 
+                class="inner-check" 
+                type="checkbox"
+                ${item.checked ? "checked" : ''}
+                input-check
+                tour-id=${item.tourId}
+              >
             </div>
             <div class="inner-product">
               <div class="inner-image">
@@ -675,6 +682,9 @@ const drawCart = () => {
 
         // Tính tiền
         const subTotalPrice = data.cart.reduce((sum, tour) => {
+          if (!tour.checked) {
+            return sum;
+          }
           return sum + (tour.quantityAdult * tour.priceNewAdult) + (tour.quantityChildren * tour.priceNewChildren) + (tour.quantityBaby * tour.priceNewBaby)
         }, 0)
 
@@ -719,7 +729,24 @@ const drawCart = () => {
             drawCart();
           })
         });
-        // HếtSự kiện xóa tour
+        // Hết Sự kiện xóa tour
+
+        // Sự kiện check item
+        const checkInputList = document.querySelectorAll("[input-check]")
+
+        checkInputList.forEach(item => {
+          item.addEventListener("change", () => {
+            const tourId = item.getAttribute("tour-id")
+            const checked = item.checked
+
+            const cart = JSON.parse(localStorage.getItem("cart"))
+            const itemUpdate = cart.find(item => item.tourId == tourId)
+            itemUpdate.checked = checked
+            localStorage.setItem("cart", JSON.stringify(cart))
+            drawCart();
+          })
+        });
+        // Hết Sự kiện check item
       }
     })
 }
