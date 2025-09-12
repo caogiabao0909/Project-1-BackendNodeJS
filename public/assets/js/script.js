@@ -584,7 +584,7 @@ const drawCart = () => {
         const htmlCart = data.cart.map(item => `
           <div class="inner-tour-item">
             <div class="inner-actions">
-              <button class="inner-delete">
+              <button class="inner-delete" button-delete tour-id=${item.tourId}>
                 <i class="fa-solid fa-xmark"></i>
               </button>
               <input class="inner-check" type="checkbox">
@@ -675,7 +675,7 @@ const drawCart = () => {
 
         // Tính tiền
         const subTotalPrice = data.cart.reduce((sum, tour) => {
-          return (tour.quantityAdult * tour.priceNewAdult) + (tour.quantityChildren * tour.priceNewChildren) + (tour.quantityBaby * tour.priceNewBaby)
+          return sum + (tour.quantityAdult * tour.priceNewAdult) + (tour.quantityChildren * tour.priceNewChildren) + (tour.quantityBaby * tour.priceNewBaby)
         }, 0)
 
         const discount = 0;
@@ -704,6 +704,22 @@ const drawCart = () => {
           })
         });
         // Hết Sự kiện cập nhật số lượng
+
+        // Sự kiện xóa tour
+        const deleteButtonList = document.querySelectorAll("[button-delete]")
+
+        deleteButtonList.forEach(button => {
+          button.addEventListener("click", () => {
+            const tourId = button.getAttribute("tour-id")
+
+            const cart = JSON.parse(localStorage.getItem("cart"))
+            const indexItem = cart.findIndex(tour => tour.tourId == tourId)
+            cart.splice(indexItem, 1);
+            localStorage.setItem("cart", JSON.stringify(cart))
+            drawCart();
+          })
+        });
+        // HếtSự kiện xóa tour
       }
     })
 }
