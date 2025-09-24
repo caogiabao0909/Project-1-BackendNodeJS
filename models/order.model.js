@@ -1,12 +1,17 @@
 const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
+  orderCode: String,
   fullName: String,
   phone: String,
   note: String,
   items: Array,
   subTotal: Number,
   total: Number,
+  discount: {
+    type: Number,
+    default: 0
+  },
   paymentMethod: String,
   paymentStatus: String,
   status: String,

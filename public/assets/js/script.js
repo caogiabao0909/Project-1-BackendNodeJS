@@ -392,6 +392,7 @@ if (orderForm) {
         fullName,
         phone,
         note,
+        paymentMethod: method,
         items: cart
       }
 

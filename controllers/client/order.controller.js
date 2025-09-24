@@ -1,9 +1,24 @@
+const moment = require("moment");
+const { paymentMethod, paymentStatus, orderStatus } = require("../../config/variable");
+const { generateRandomNumber } = require("../../helpers/generate.helper");
 const Order = require("../../models/order.model");
 const Tour = require("../../models/tour.model");
+const City = require("../../models/city.model");
 
 
 module.exports.createPost = async (req, res) => {
   try {
+    let orderCode;
+    let isDuplicate = true;
+    while (isDuplicate) {
+      orderCode = `OD` + generateRandomNumber(10);
+      const existingOrder = await Order.findOne({ orderCode });
+      if (!existingOrder) {
+        isDuplicate = false;
+      }
+    }
+    req.body.orderCode = orderCode;
+
     for (const item of req.body.items) {
       const tourInfo = await Tour.findOne({
         _id: item.tourId
@@ -76,5 +91,56 @@ module.exports.createPost = async (req, res) => {
       code: "error",
       message: "Đặt hàng không thành công!"
     })
+  }
+}
+
+module.exports.success = async (req, res) => {
+  try {
+    const { orderId, phone } = req.query;
+
+    const orderDetail = await Order.findOne({
+      _id: orderId,
+      phone: phone,
+    })
+
+    if (!orderDetail) {
+      res.redirect(`/`)
+      return
+    }
+
+    orderDetail.paymentMethodName = paymentMethod.find(item => item.value === orderDetail.paymentMethod).label;
+    orderDetail.paymentStatusName = paymentStatus.find(item => item.value === orderDetail.paymentStatus).label;
+    orderDetail.orderStatusName = orderStatus.find(item => item.value === orderDetail.status).label;
+    orderDetail.createdAtFormat = moment(orderDetail.createdAt).format("HH:mm - DD/MM/YYYY")
+
+    for (const item of orderDetail.items) {
+      const tourInfo = await Tour.findOne({
+        _id: item.tourId,
+        deleted: false
+      })
+
+      if (tourInfo) {
+        item.slug = tourInfo.slug;
+      }
+
+      item.departureDateFormat = moment(item.departureDate).format("DD/MM/YYYY")
+
+      const city = await City.findOne({
+        _id: item.locationFrom
+      })
+
+      if (city) {
+        item.cityName = city.name
+      }
+
+    }
+
+    res.render(`client/pages/order-success`, {
+      pageTitle: `Đặt hàng thành công`,
+      orderDetail
+    })
+  } catch (error) {
+    console.log(error)
+    res.redirect(`/`)
   }
 }
