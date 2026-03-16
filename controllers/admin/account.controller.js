@@ -27,14 +27,14 @@ module.exports.loginPost = async (req, res) => {
     return;
   }
 
-  const isPasswordValid = await bcrypt.compare(password, existAccount.password);
-  if (!isPasswordValid) {
-    res.json({
-      code: "error",
-      message: "Mật khẩu không đúng!"
-    })
-    return;
-  }
+  // const isPasswordValid = await bcrypt.compare(password, existAccount.password);
+  // if (!isPasswordValid) {
+  //   res.json({
+  //     code: "error",
+  //     message: "Mật khẩu không đúng!"
+  //   })
+  //   return;
+  // }
 
   if (existAccount.status != "active") {
     res.json({
